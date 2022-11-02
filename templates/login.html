@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+
+
+{% block login %}
+<div class="container">
+      <div class="row justify-content-md-center">
+          <div class="col-lg-4 col-md-4 col-sm-4 mt-5">
+              {% if error %}
+              <p class="text-danger"><i>{{ error }}</i></p>
+              {% endif %}
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+              <div class="mb-3">
+                <input required type="text" name="username" class="form-control" id="exampleInputEmail1" placeholder="Username" aria-describedby="emailHelp">
+              </div>
+              <div class="mb-3">
+                <input required type="password" name="password" class="form-control" placeholder="Password" id="exampleInputPassword1">
+              </div>
+              <button type="submit" class="btn btn-secondary">Login</button>
+            </form>
+          </div>
+    </div>
+</div>
+{% endblock login %}
