@@ -88,6 +88,12 @@
     </div>
     {% endif %}
 
+    {% elif request.user.is_authenticated %}
+
+    <div class="d-flex justify-content-center">
+        <p class="h1 text-secondary mt-3">Hello! {{ request.user.username }}</p>
+    </div>
+
     {% endif %}
 
     {% endblock content %}
