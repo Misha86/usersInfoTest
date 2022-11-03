@@ -1,12 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import (authenticate, login, logout)
+from django.contrib.auth.models import User
 
 from .forms import UploadFileForm
 from .services import DataUploadService
 
 
-def hello(request):
-    return render(request, 'index.html')
+def users_list(request):
+    context = {}
+    if request.user.is_superuser:
+        users = User.objects.exclude(is_superuser=True)
+        context.update({"users_list": users})
+    return render(request, 'index.html', context=context)
 
 
 def sing_in(request):
