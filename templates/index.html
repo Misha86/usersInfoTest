@@ -52,7 +52,9 @@
 <div class="container">
 
     {% block content %}
+
     {% if request.user.is_superuser %}
+
     {% if users_list %}
     <table class="table mt-3">
         <thead>
@@ -62,6 +64,7 @@
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Date Joined</th>
+            <th scope="col">Avatar</th>
         </tr>
         </thead>
         <tbody>
@@ -72,6 +75,9 @@
             <td>{{ user.first_name }}</td>
             <td>{{ user.last_name }}</td>
             <td>{{ user.date_joined }}</td>
+            <td class="w-25">
+                <img src="{{ user.avatar.url }}" alt="{{ user.id }}" class="img-thumbnail">
+            </td>
         </tr>
         {% endfor %}
         </tbody>
@@ -81,6 +87,7 @@
         <p class="h1 text-danger mt-3">No Registered Users Yet</p>
     </div>
     {% endif %}
+
     {% endif %}
 
     {% endblock content %}

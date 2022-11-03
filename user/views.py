@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import (authenticate, login, logout)
-from django.contrib.auth.models import User
+from .models import CustomUser
 
 from .forms import UploadFileForm
 from .services import DataUploadService
@@ -9,7 +9,7 @@ from .services import DataUploadService
 def users_list(request):
     context = {}
     if request.user.is_superuser:
-        users = User.objects.exclude(is_superuser=True)
+        users = CustomUser.objects.exclude(is_superuser=True)
         context.update({"users_list": users})
     return render(request, 'index.html', context=context)
 

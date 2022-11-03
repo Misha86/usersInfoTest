@@ -134,3 +134,5 @@ FILE_UPLOAD_HANDLERS = [
     'django.core.files.uploadhandler.TemporaryFileUploadHandler',
     'django.core.files.uploadhandler.MemoryFileUploadHandler',
 ]
+
+AUTH_USER_MODEL = "user.CustomUser"
