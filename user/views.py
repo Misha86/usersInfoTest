@@ -24,7 +24,7 @@ def sing_in(request):
         login(request, user)
         return redirect('/')
     else:
-        return render(request, 'login.html', {'error': "Inputted data is incorrect!"})
+        return render(request, 'login.html', {'error': "Inputted data is incorrect!"}, status=403)
 
 
 def logout_view(request):
