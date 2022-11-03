@@ -91,6 +91,13 @@ python manage.py test
 you will see start page.
 ```
 
+- Login as superuser
+- For load data from files push left top green button
+- In form choose files .csv and .xml
+- Push 'Upload files' 
+- You will be redirected to the home page
+- Table with users info will be there
+
 ----
 
 
