@@ -53,7 +53,7 @@ class CustomUserChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField()
 
     class Meta:
-        """Metaclass for specifing CustomUser model and its fields."""
+        """Metaclass for specifying CustomUser model and its fields."""
 
         model = CustomUser
         fields = ("username", "password", "first_name", "last_name")

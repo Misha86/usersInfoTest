@@ -7,17 +7,17 @@ from django.contrib.auth.models import AbstractUser
 class MyUserManager(BaseUserManager):
     """This class provides tools for creating and managing CustomUser model."""
 
-    def create_user(self, password, **additional_fields):
+    def create_user(self, password, username, **additional_fields):
         """Creates CustomUser. Saves user instance with given fields values."""
-        user = self.model(**additional_fields,)
+        user = self.model(username=username, **additional_fields,)
         user.set_password(password)
         user.save(using=self._db)
 
         return user
 
-    def create_superuser(self, password, **additional_fields):
+    def create_superuser(self, password, username, **additional_fields):
         """Creates superuser. Saves instance with given fields values."""
-        user = self.create_user(password, **additional_fields)
+        user = self.create_user(password=password, username=username, **additional_fields)
         user.is_superuser = True
         user.is_active = True
         user.is_staff = True
