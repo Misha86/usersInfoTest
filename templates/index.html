@@ -15,38 +15,39 @@
   <header class="p-3 text-bg-dark">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 22 22">
+            <a href="/" class="d-flex me-3 align-items-center mb-1 mb-lg-0 text-white text-decoration-none">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 20">
                       <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
                       <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
                  </svg>
-            </a>
-            <div class="me-3">
-                <p class="h5 u">
+                <span class="fs-4">
                     {% if request.user.is_authenticated  %}
                        {{request.user|title}}
                     {% else %}
                        Hello, do you want to login?
                     {% endif %}
-                </p>
-            </div>
+                </span>
+            </a>
             <div class="text-end">
                     {% if request.user.is_authenticated  %}
                           <a href="{% url 'logout' %}" class="btn btn-warning" >Logout</a>
                     {% elif request.path != '/login' %}
                           <a href="{% url 'login' %}" class="btn btn-outline-light me-2" >Login</a>
                     {% endif %}
-                </div>
+            </div>
+            {% if request.user.is_superuser  %}
+                <div class="flex-fill d-flex justify-content-end">
+                <a href="{% url 'upload_files' %}" class="btn btn-outline-success me-2" >Load data</a>
+            </div>
+            {% endif %}
         </div>
     </div>
   </header>
+<div class="container">
 
-  {% if not request.user.is_authenticated  %}
+  {% block content %}
+  {% endblock content %}
 
-  {% block login %}
-  {% endblock login %}
-
-  {% endif %}
-
+</div>
 </body>
 </html>
