@@ -45,7 +45,7 @@ It must contain the following settings:
 
 ```
 SECRET_KEY = '😊YOUR_SECRET_KEY😊'
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = *
 ```
 
