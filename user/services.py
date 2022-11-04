@@ -1,18 +1,21 @@
 """Module for all project services."""
 import csv
-from django.utils import timezone
-import xmltodict
 import re
-from django.utils.timezone import get_current_timezone
-from .models import CustomUser
-from django.db import IntegrityError
+
 import requests
+import xmltodict
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
+from django.db import IntegrityError
+from django.utils import timezone
+from django.utils.timezone import get_current_timezone
+
+from .models import CustomUser
 
 
 class DataUploadService:
     """Class for data uploading services."""
+
     def __init__(self, file_csv, file_xml):
         self._file_csv = file_csv
         self._file_xml = file_xml
@@ -27,7 +30,8 @@ class DataUploadService:
     def handle_uploaded_xml_file(self):
         """Upload data from .xml files."""
         data = xmltodict.parse(self._file_xml)
-        return [d for d in data['user_list']['user']['users']['user'] if self.check_data(d.values())]
+        return [d for d in data['user_list']['user']
+                ['users']['user'] if self.check_data(d.values())]
 
     @staticmethod
     def check_data(data):
@@ -50,7 +54,7 @@ class DataUploadService:
     def change_date_joined_value(self, result):
         """Change date_joined value to DateTime type."""
         return list(map(lambda x: {**x, 'date_joined':
-            timezone.datetime.fromtimestamp(int(x['date_joined']), tz=get_current_timezone())}, result))
+                                   timezone.datetime.fromtimestamp(int(x['date_joined']), tz=get_current_timezone())}, result))
 
     def add_users_data_to_database(self):
         """Create new users and add them to the database."""

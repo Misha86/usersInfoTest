@@ -1,19 +1,19 @@
 """Module for all project tests."""
 import tempfile
 
-from django.test import TestCase
+from django.contrib.auth.hashers import check_password
+from django.test import Client, TestCase
 from django.urls import reverse
-from django.test import Client
 
 from .models import CustomUser
-from django.contrib.auth.hashers import check_password
 
 
 class CustomUserModelTest(TestCase):
     """Tests for CustomUser model behavior."""
 
     def setUp(self) -> None:
-        self.superuser = CustomUser.objects.create_superuser(username="username1", password="password1")
+        self.superuser = CustomUser.objects.create_superuser(
+            username="username1", password="password1")
         self.user = CustomUser.objects.create_user(username="username2", password="password2")
 
     def test_count_created_users(self):
@@ -44,14 +44,19 @@ class ViewsTest(TestCase):
         self.client = Client()
         image = tempfile.NamedTemporaryFile(suffix=".jpg").name
         CustomUser.objects.create_user(username="username", password="password", avatar=image)
-        CustomUser.objects.create_superuser(username="superuser", password="superuser", avatar=image)
+        CustomUser.objects.create_superuser(
+            username="superuser", password="superuser", avatar=image)
 
     def test_post_login_valid_data(self):
-        response = self.client.post(reverse('login'), {'username': 'username', 'password': 'password'})
+        response = self.client.post(
+            reverse('login'), {
+                'username': 'username', 'password': 'password'})
         self.assertEqual(response.status_code, 302)
 
     def test_post_login_invalid_data(self):
-        response = self.client.post(reverse('login'), {'username': 'invalid', 'password': 'invalid'})
+        response = self.client.post(
+            reverse('login'), {
+                'username': 'invalid', 'password': 'invalid'})
         self.assertEqual(response.status_code, 403)
         self.assertEqual(response.context['error'], "Inputted data is incorrect!")
 

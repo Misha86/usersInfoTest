@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import (authenticate, login, logout)
-from .models import CustomUser
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import redirect, render
 
 from .forms import UploadFileForm
+from .models import CustomUser
 from .services import DataUploadService
 
 
@@ -10,7 +10,7 @@ def users_list(request):
     context = {}
     if request.user.is_superuser:
         users = CustomUser.objects.exclude(is_superuser=True)
-        context.update({"users_list": users})
+        context["users_list"] = users
     return render(request, 'index.html', context=context)
 
 
@@ -20,11 +20,10 @@ def sing_in(request):
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        return redirect('/')
-    else:
+    if user is None:
         return render(request, 'login.html', {'error': "Inputted data is incorrect!"}, status=403)
+    login(request, user)
+    return redirect('/')
 
 
 def logout_view(request):
